@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Filter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5c7f7;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        .post {
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .category {
+            font-size: 14px;
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Post Filter</h1>
+        <input type="text" id="search" placeholder="Search for posts...">
+        <select id="category-filter">
+            <option value="all">All Categories</option>
+            <option value="javascript">JavaScript</option>
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="web-design">Web Design</option>
+        </select>
+        <div class="post-list">
+            <div class="post" data-category="javascript">Post 1: JavaScript Basics <span class="category">(JavaScript)</span></div>
+            <div class="post" data-category="html">Post 2: Learning HTML <span class="category">(HTML)</span></div>
+            <div class="post" data-category="css">Post 3: CSS for Beginners <span class="category">(CSS)</span></div>
+            <div class="post" data-category="javascript">Post 4: Advanced JavaScript <span class="category">(JavaScript)</span></div>
+            <div class="post" data-category="web-design">Post 5: Responsive Web Design <span class="category">(Web Design)</span></div>
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('search');
+        const categoryFilter = document.getElementById('category-filter');
+        const posts = document.querySelectorAll('.post');
+
+        function filterPosts() {
+            const filter = searchInput.value.toLowerCase();
+            const category = categoryFilter.value;
+            posts.forEach(post => {
+                const text = post.textContent.toLowerCase();
+                const postCategory = post.dataset.category;
+                if ((text.includes(filter) || filter === '') && (category === 'all' || postCategory === category)) {
+                    post.style.display = '';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        }
+
+        searchInput.addEventListener('input', filterPosts);
+        categoryFilter.addEventListener('change', filterPosts);
+
+        // Initial filter to show all posts
+        filterPosts();
+    </script>
+</body>
+</html>
